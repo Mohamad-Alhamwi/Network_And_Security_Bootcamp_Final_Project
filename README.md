@@ -9,9 +9,10 @@
 ## Project Phases:
 The project will be done into 6 separate phases of work as the following:
 
-**1. Phase:** Creating the base configuration for the devices.
-**2. Phase:** Configuring the backbone with IPV4.
-**3. Phase:** Configuring the backbone with IPV6.
-**4. Phase:** Doing the OSPF configuration on the IPV4 backbone.
-**5. Phase:** Doing the OSPF configuration on the IPV6 backbone.
-**6. Phase:** Restricting access to the only specified ports.
+**1. Phase:** Creating the base configuration for the devices.<br>
+**2. Phase:** Configuring the backbone with IPV4.<br>
+**3. Phase:** Configuring the backbone with IPV6.<br>
+**4. Phase:** Doing the OSPF configuration on the IPV4 backbone.<br>
+**5. Phase:** Doing the OSPF configuration on the IPV6 backbone.<br>
+**6. Phase:** Restricting access to the only specified ports.<br>
+
