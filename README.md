@@ -80,7 +80,7 @@ SUMMARY STEPS:
 
 3. interface fastethernet slot/port
 
-4. ip address ip-address mask
+4. ip address [IP_ADDRESS] [MASK]
 
 5. no shutdown (no sh)
 
@@ -183,6 +183,33 @@ After that, let us open the terminal on the Host A and examine the scenarios 2 a
 
 
 And Voila! everything is working fine as intended.
+
+### Phase 4: Router interfaces configuration with IPv6.
+
+SUMMARY STEPS:
+
+1. enable (en)
+
+2. configure terminal (conf t)
+
+3. interface fastethernet slot/port
+
+4. ipv6 address [IPv6_ADDRESS/extension]
+
+5. no shutdown (no sh)
+
+6. exit
+
+7. do copy running-config startup-config (do wr)
+
+STEPS EXPLANATION:
+
+Everything here is same as in phase 2, except for step 4 where the version of IP and the network prefix for the address need to be specified.
+
+For example, the command for the serial 0/0/0 interface on Ankara router would be `ipv6 add 1ef0:abc:bc:c::2/126`.
+
+
+### Phase 5: Dynamic Routing with OSPF on the IPV6 backbone
 
 
 
