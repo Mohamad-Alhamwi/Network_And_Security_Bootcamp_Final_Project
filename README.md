@@ -112,12 +112,77 @@ Now that we have configured all the interfaces on all the routers, let us do a p
 
 1. The Host A wants to ping the AN-ER-01 router which is on the same subnet.
 
-![scenario 1 ping test](/Assets/Images/ping-test-1.png)
+![Scenario 1 ping test](/Assets/Images/ping-test-1.png)
 
 2. The Host A wants to ping the Host B which is on a different subnet that does not have a direct connection with the Host A's subnet router.
 
-![scenario 2 ping test](/Assets/Images/ping-test-2.png)
+![Scenario 2 ping test](/Assets/Images/ping-test-2.png)
 
 3. The Host A wants to ping the IS-ER-01 router which is on a different subnet that has direct connection with the Host A's subnet router.
 
-![scenario 3 ping test](/Assets/Images/ping-test-3.png)
+![Scenario 3 ping test](/Assets/Images/ping-test-3.png)
+
+### Phase 3: Dynamic Routing with OSPF on the IPV4 backbone
+
+SUMMARY STEPS:
+
+1. enable (en)
+
+2. configure terminal (conf t)
+
+3. router ospf 1
+
+4. network [NETWORK_IP] [WILDCARD_MASK] area [AREA_NUMBER]
+
+STEPS EXPLANATION:
+
+**3. Step:** To enable OSPF routing for the specified routing process, and place the router in router configuration mode.
+
+**4. Step:** To advertise the networks on router in the correct OSPF areas.
+
+The OSPF basic operating logic is forming neighbor relationships, called adjacencies, with other routers in the same **area** so that routers can share routing information. Let me explain this step by demonstrating on our topology.
+
+On our topology, we have three routers Istanbul, Ankara and Izmir. We need first to make Ankara and Istanbul routers form neighbor relationship, then the same thing for Istanbul and Izmir routers.
+
+On AN-ER-01, in the CLI we type `network 11.0.0.0 0.0.0.3 area 0`. After typing that, nothing is being presented on the CLI. Now let us switch over to the IS-ER-01 router, in the CLI we type `network 11.0.0.0 0.0.0.3 area 0`. After waiting for seconds, we are going to see something like in the picture below:
+
+![Istanbul and Ankara creating nighbor relationship](/Assets/Images/Is-An-creating-neighbor-relationship.png)
+
+This means that the neighbor relationship between Ankara router and Istanbul router has been established and now they are ready to exchange routing information between eachother. If we want to see what each one has exchanged with the other, we need to look at the routing table for each by typing `show ip route`. And as we see in the picture below, nothing has been exchanged between them:
+
+![Istanbul and Ankara have not exchanged anything yet](/Assets/Images/Is-An-display-ip-route.png)
+
+Now let us have the nighbor relationship established between Izmir router and Istanbul router. On IZ-ER-01, in the CLI we type `network 13.0.0.0 0.0.0.3 area 0`. After typing that, nothing is being presented on the CLI. Now let us switch over to the IS-ER-01 router, in the CLI we type `network 11.0.0.0 0.0.0.3 area 0`. After waiting for seconds, we are going to see something like in the picture below:
+
+![Istanbul and Izmir Forming nighbor relationship](/Assets/Images/Is-Iz-creating-neighbor-relationship.png)
+
+This means that the neighbor relationship between Izmir router and Istanbul router has been established too, and now they are ready to exchange routing information between eachother. Immediately after that, when we look at the routing table, we are going to notice that Istanbul has exchanged the route information of Ankara router with Izmir router as shown in the picture bellow:
+
+![Istanbul and Izmir Forming nighbor relationship](/Assets/Images/Is-Iz-display-ip-route.png)
+
+And exchanged the route information of Izmir router with Ankara router as shown in the picture bellow:
+
+![Istanbul and Izmir Forming nighbor relationship](/Assets/Images/An-display-ip-route.png)
+
+Now that the neighbor relationship has been formed among all the routers, they can share their internal network information by announcing it to their neighbor(s).
+
+For example, in Istanbul router CLI, after we announce the internal network by typing `network 192.168.1.0 0.0.0.255 area 0`, in Izmir's and Ankara's routing table we will have something like in the image below:
+
+![Istanbul and Izmir Forming nighbor relationship](/Assets/Images/An-Iz-display-ip-route.png)
+
+At the moment, let us have Ankara and Izmir router announced their internal networks so that all the devices on the network can ping each other.
+
+On Ankara router type in `network 192.168.2.0 0.0.0.255 area 0`. And on Izmir router type in `network 192.168.3.0 0.0.0.255 area 0`.
+
+After that, let us open the terminal on the Host A and examine the scenarios 2 and 3 in phase 2 again:
+
+![Scenario 2 ping test after OSPF routing](/Assets/Images/ping-test-2-after-ospf.png)
+
+
+![Scenario  ping test after OSPF routing](/Assets/Images/ping-test-3-after-ospf.png)
+
+
+And Voila! everything is working fine as intended.
+
+
+
