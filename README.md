@@ -241,6 +241,53 @@ Izmir Router's IPv4 and IPv6 Routing Tables:
 
 ![Izmir Router IPV4/IPV6 Routing Table](/Assets/Images/Iz-ipv6-routing-table.png)
 
+### Phase 6: Restricting access to the only specified ports
+
+STEPS:
+
+**1. Step:** DNS Server Configuration On Both Host A And Host B:
+
+![DNS Server Conf On Both Hosts](/Assets/Images/Host-A-B-DNS-Config.png)
+
+**2. Step:** Configuring ACL for both IPv4 and IPv6:
+
+Access Control List For IPV6:
+
+`
+IPV6  access-list WEBACL6
+
+permit udp any  host 1ef0:111:11:1::2 eq 53
+
+permit tcp any  host 1ef0:111:11:1::3 eq 80
+
+interface fastEthernet 0/0
+
+ipv6 traffic-filter WEBACL6 out 
+
+`
+
+Access Control List For IPV4:
+
+`
+ip access-list extended WEBACL4
+
+permit udp 192.168.2.0 0.0.0.255 host 192.168.1.2 eq 53
+
+permit tcp 192.168.2.0 0.0.0.255 host 192.168.1.3 eq 80
+
+permit udp 192.168.3.0 0.0.0.255 host 192.168.1.2 eq 53
+
+permit tcp 192.168.3.0 0.0.0.255 host 192.168.1.3 eq 80
+
+interface fastEthernet  0/0
+
+ip access-group WEBACL4 out
+
+`
+
+![Show Access Lists On Istanbul Router](/Assets/Images/show-access-lists.png)
+
+
 
 
 
