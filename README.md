@@ -70,7 +70,7 @@ So far, we have done all the basic configurations that need to be done whenever 
 
 By doing all the above steps on all the network devices (switches and routers), we have gotten them ready for all the advanced configuration. And now, we can move on to the next phase.
 
-### Phase 2: Router interfaces configuration with IPv4.
+### Phase 2: Router interfaces configuration with IPv4
 
 SUMMARY STEPS:
 
@@ -184,7 +184,7 @@ After that, let us open the terminal on the Host A and examine the scenarios 2 a
 
 And Voila! everything is working fine as intended.
 
-### Phase 4: Router interfaces configuration with IPv6.
+### Phase 4: Router interfaces configuration with IPv6
 
 SUMMARY STEPS:
 
@@ -210,6 +210,38 @@ For example, the command for the serial 0/0/0 interface on Ankara router would b
 
 
 ### Phase 5: Dynamic Routing with OSPF on the IPV6 backbone
+
+SUMMARY STEPS:
+
+1. enable (en)
+
+2. configure terminal (conf t)
+
+3. ipv6 unicast-routing
+
+4. ipv6 router ospf 1
+
+5. router-id [ROUTER_ID_FROM_YOUR_CHOICE]
+
+6. int fa 0/0
+
+7. ipv6 ospf 1 area 0
+
+STEPS EXPLANATION:
+
+Istanbul Router's IPv4 and IPv6 Routing Tables:
+
+![Istanbul Router IPV4/IPV6 Routing Table](/Assets/Images/Is-ipv6-routing-table.png)
+
+Ankara Router's IPv4 and IPv6 Routing Tables:
+
+![Ankara Router IPV4/IPV6 Routing Table](/Assets/Images/An-ipv6-routing-table.png)
+
+Izmir Router's IPv4 and IPv6 Routing Tables:
+
+![Izmir Router IPV4/IPV6 Routing Table](/Assets/Images/Iz-ipv6-routing-table.png)
+
+
 
 
 
