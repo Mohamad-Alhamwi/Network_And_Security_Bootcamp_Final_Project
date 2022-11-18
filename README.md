@@ -253,7 +253,7 @@ STEPS:
 
 Access Control List For IPV6:
 
-`
+```
 IPV6  access-list WEBACL6
 
 permit udp any  host 1ef0:111:11:1::2 eq 53
@@ -264,11 +264,11 @@ interface fastEthernet 0/0
 
 ipv6 traffic-filter WEBACL6 out 
 
-`
+```
 
 Access Control List For IPV4:
 
-`
+```
 ip access-list extended WEBACL4
 
 permit udp 192.168.2.0 0.0.0.255 host 192.168.1.2 eq 53
@@ -283,12 +283,29 @@ interface fastEthernet  0/0
 
 ip access-group WEBACL4 out
 
-`
+```
 
 ![Show Access Lists On Istanbul Router](/Assets/Images/show-access-lists.png)
 
 
+**3. Step:** Ping Test on both Host A and Host B:
 
+Host A Ping Test:
 
+![Show Access Lists On Istanbul Router](/Assets/Images/Host-A-Ping-Unreachable.png)
+
+Host B Ping Test:
+
+![Show Access Lists On Istanbul Router](/Assets/Images/Host-B-Ping-Unreachable.png)
+
+**4. Step:** Sending request to the Web server on both Host A and Host B:
+
+Request from Host A to the web server:
+
+![Show Access Lists On Istanbul Router](/Assets/Images/Host-A-DNS-Request.png)
+
+Request from Host B to the web server:
+
+![Show Access Lists On Istanbul Router](/Assets/Images/Host-B-DNS-Request.png)
 
 
