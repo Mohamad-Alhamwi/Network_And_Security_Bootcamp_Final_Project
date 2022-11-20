@@ -2,9 +2,9 @@
 
 ## Tasks To Be Done:
 
-- [ ] The network devices will be working as a dual-stack. So each networking device will be configured with both IPv4 and IPv6 connectivity capabilities.
-- [ ] The routing functionality will be done by using OSPF protocol.
-- [ ] On both IPv4 and IPv6 backbones everything will be served from only the specified ports and every port except those ports will be closed. Apply that with the Access Control List (ACL).
+- [X] The network devices will be working as a dual-stack. So each networking device will be configured with both IPv4 and IPv6 connectivity capabilities.
+- [X] The routing functionality will be done by using OSPF protocol.
+- [X] On both IPv4 and IPv6 backbones everything will be served from only the specified ports and every port except those ports will be closed. Apply that with the Access Control List (ACL).
 
 ## Project Phases:
 The project will be done into 6 separate phases of work as the following:
@@ -18,7 +18,7 @@ The project will be done into 6 separate phases of work as the following:
 
 ### Phase 1: Basic Cisco Router/Switch Configuration
 
-SUMMARY STEPS:
+==SUMMARY STEPS:==
 
 1. enable (en)
 
@@ -34,7 +34,7 @@ SUMMARY STEPS:
 
 6. do copy running-config startup-config (do wr)
 
-STEPS EXPLANATION:
+==STEPS EXPLANATION:==
 
 **1. Step:** To get into the privileged mode.
 
@@ -64,7 +64,27 @@ As a device type/function identifier I used the following:
 
 **5. Step:** To specify a virtual terminal for remote console access (Telnet/SSH). The numbers 0-4 mean that the device can allow five simultaneous virtual connections. And as I know, we may have up to 16 (1-15) simultaneous virtual connections.
 
-**6. Step:** To copy the running configurations into the startup configurations. We need to do this step because immediately after we type a command in the global configuration mode, it will be stored in the running configurations which reside in a device’s RAM, so if a device loses power, all the configurations will be erased. Here, I want to point out that we need to precede the command with `do` if we are still in the configuration mode. 
+**6. Step:** To copy the running configurations into the startup configurations. We need to do this step because immediately after we type a command in the global configuration mode, it will be stored in the running configurations which reside in a device’s RAM, so if a device loses power, all the configurations will be erased. Here, I want to point out that we need to precede the command with `do` if we are still in the configuration mode.
+
+On Ankara router, the configuration steps would be like the following:
+
+```
+en
+
+conf t
+
+hostname AN-ER-01
+
+enable secret cisco
+
+line vty 0 4
+
+password cisco
+
+login
+
+do wr
+```
 
 So far, we have done all the basic configurations that need to be done whenever powering up a new Cisco router/switch. To display all the configurations currently running on the terminal, we use the `show running-config` or if we are still in the configuration mode we need to type `do show running-config`.
 
