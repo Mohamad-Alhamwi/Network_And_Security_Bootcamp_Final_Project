@@ -92,7 +92,7 @@ By doing all the above steps on all the network devices (switches and routers), 
 
 ### Phase 2: Router interfaces configuration with IPv4
 
-SUMMARY STEPS:
+==SUMMARY STEPS:==
 
 1. enable (en)
 
@@ -108,7 +108,7 @@ SUMMARY STEPS:
 
 7. do copy running-config startup-config (do wr)
 
-STEPS EXPLANATION:
+==STEPS EXPLANATION:==
 
 I have already explained the first two steps. So let us jump into the step number 3.
 
@@ -128,19 +128,53 @@ This command comes in very handy when configuring new interfaces or troubleshoot
 
 After configuring the interfaces on our routers, we can display statistics for all interfaces configured on the router by typing in `show interfaces`. This command is useful and frequently used while configuring and monitoring devices.
 
+On Ankara router, the configuration steps would be like the following:
+
+```
+
+en
+
+conf t
+
+interface fastEthernet 0/0
+
+ip add 192.168.2.1 255.255.255.0
+
+no sh
+
+interface serial 0/0/0
+
+ip add 11.0.0.2 255.255.255.252
+
+no sh
+
+exit
+
+do wr
+
+```
+
 Now that we have configured all the interfaces on all the routers, let us do a ping test. Here, let us consider the following three scenarios:
 
 1. The Host A wants to ping the AN-ER-01 router which is on the same subnet.
 
 ![Scenario 1 ping test](/Assets/Images/ping-test-1.png)
 
+Explanation: The Host A succeed in sending a ping to the AN-ER-01 router ,because it directly connected to this network in Ankara and should be able to ping and get response from any other device in the same network.
+
 2. The Host A wants to ping the Host B which is on a different subnet that does not have a direct connection with the Host A's subnet router.
 
 ![Scenario 2 ping test](/Assets/Images/ping-test-2.png)
 
+Explanation: In this scenario we are facing the problem "Destination Host Unreachable" that indicates that we have a problem on our end which is the Host A's default gateway (AN-ER-01 router) cannot find a path to reach the destination so it sends us this message. The reason behind that is it has no information (no routes in its routing table) on how to forward packets to get to that remote host's network. This problem is going to be solved in Phase 3.
+
 3. The Host A wants to ping the IS-ER-01 router which is on a different subnet that has direct connection with the Host A's subnet router.
 
 ![Scenario 3 ping test](/Assets/Images/ping-test-3.png)
+
+Explanation: In this scenario we are facing the problem "Request timed out" that indicates that no Echo Reply messages were received within the default time and the problem is not on our end.
+
+At the moment, we are ready to proceed to the next phase.
 
 ### Phase 3: Dynamic Routing with OSPF on the IPV4 backbone
 
